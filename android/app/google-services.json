@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "491560581247",
+    "project_id": "raydeeplink",
+    "storage_bucket": "raydeeplink.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:491560581247:android:f49da0ae2540963911274a",
+        "android_client_info": {
+          "package_name": "com.example.webview"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "491560581247-n1n1mg52d9lhnqu68c96jk9jn91e8b3p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDc21rH9X6rphevD1h2drCPF7wef48_P_o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "491560581247-n1n1mg52d9lhnqu68c96jk9jn91e8b3p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
