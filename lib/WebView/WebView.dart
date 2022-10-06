@@ -4,6 +4,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViews extends StatefulWidget {
   final String url;
+
   const WebViews(this.url, {Key? key}) : super(key: key);
 
   @override
@@ -11,6 +12,8 @@ class WebViews extends StatefulWidget {
 }
 
 class _WebViewsState extends State<WebViews> {
+  bool isLoading = true;
+  final _key = UniqueKey();
   @override
   void initState() {
     super.initState();
@@ -25,8 +28,22 @@ class _WebViewsState extends State<WebViews> {
         appBar: AppBar(
           title: const Text(' WebView'),
         ),
-        body: WebView(
-          initialUrl: widget.url,
+        body: Stack(
+          children: [
+            WebView(
+                key: _key,
+                initialUrl: widget.url,
+                onPageFinished: (finish) {
+                  setState(() {
+                    isLoading = false;
+                  });
+                }),
+            isLoading
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Stack(),
+          ],
         ));
   }
 }

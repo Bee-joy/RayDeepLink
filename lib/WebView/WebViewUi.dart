@@ -55,10 +55,13 @@ class WebViewUI extends StatelessWidget {
                       Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                         ElevatedButton(
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => WebViews(_url.text)));
+                            if (_formKey.currentState!.validate()) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          WebViews(_url.text)));
+                            }
                           },
                           child: const Text('Go'),
                           style: ElevatedButton.styleFrom(

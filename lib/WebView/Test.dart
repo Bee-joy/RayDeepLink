@@ -11,13 +11,17 @@ class _TestState extends State<Test> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:
-          Column(mainAxisAlignment: MainAxisAlignment.center, children: const [
-        Text(
-          "Deep link test successful",
-          style: TextStyle(fontSize: 18),
-        ),
-      ]),
+      body: Align(
+        alignment: Alignment.center,
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Text(
+                "Deep link test successful",
+                style: TextStyle(fontSize: 18),
+              ),
+            ]),
+      ),
     );
   }
 }

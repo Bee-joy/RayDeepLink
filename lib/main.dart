@@ -42,10 +42,41 @@ class _MyAppState extends State<MyApp> {
     FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
     dynamicLinks.onLink.listen((dynamicLinkData) {
       Get.toNamed(dynamicLinkData.link.queryParameters.values.first);
+      // var user = FirebaseAuth.instance.currentUser;
+
+      // if (user == null &&
+      //     dynamicLinkData != null &&
+      //     dynamicLinkData.link.hasQuery) {
+      //   String referrerUid =
+      //       dynamicLinkData.link.queryParameters['invitedby'] ?? '';
+      //   createAnonymousAccountWithReferrerInfo(referrerUid);
+      // }
     }).onError((error) {
       print(error.message);
     });
   }
+
+  Future<void> handleDeepLink(PendingDynamicLinkData data) async {
+    final Uri deepLink = data.link;
+    var isRefer = deepLink.pathSegments.contains('refer');
+    if (isRefer) {
+      var code = deepLink.queryParameters['invitedby'];
+      if (code != null) {
+        String referrerCode = code;
+      }
+    }
+  }
+
+  // createAnonymousAccountWithReferrerInfo(String refferUId) {
+  //   FirebaseAuth.instance.signInAnonymously().whenComplete(() {
+  //     var user = FirebaseAuth.instance.currentUser;
+  //     DatabaseReference ref = FirebaseDatabase.instance.ref();
+  //     var userRecord = ref.child("users").child(user!.uid);
+  //     userRecord.child("referred_by").set(refferUId);
+  //   });
+  // }
+
+  Future<void> rewardUser(String currentUserId, String referrerCode) async {}
 
   void initFirebaseNotificationListener() {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
