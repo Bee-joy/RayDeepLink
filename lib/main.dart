@@ -47,13 +47,12 @@ class _MyAppState extends State<MyApp> {
   Future<void> initDynamicLinks() async {
     FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
     dynamicLinks.onLink.listen((dynamicLinkData) {
+      print("link is $dynamicLinkData");
       Get.toNamed(dynamicLinkData.link.queryParameters.values.first);
     }).onError((error) {
       print(error.message);
     });
   }
-
-  Future<void> rewardUser(String currentUserId, String referrerCode) async {}
 
   configureNotifications() {
     var result = FlutterNotificationChannel.registerNotificationChannel(

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -44,7 +45,7 @@ class LoginBloc {
       String name, String email, String password, String referralCode) async {
     try {
       final uid = await signup(email, password);
-      const referCode = "xyzabc";
+      final referCode = generateCode("refer");
       final referLink = await generateLink(referCode);
       await FirebaseFirestore.instance.collection('users').doc(uid).set({
         'name': name,
@@ -134,6 +135,12 @@ class LoginBloc {
         email: email, password: password);
     final uid = currentUser.user?.uid;
     return uid;
+  }
+
+  String generateCode(String prefix) {
+    Random random = Random();
+    var id = random.nextInt(92143543) + 0945123456;
+    return '$prefix-${(id.toString().substring(0, 8))}';
   }
 
   Future login(String email, String password) async {

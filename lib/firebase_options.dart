@@ -58,7 +58,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDc21rH9X6rphevD1h2drCPF7wef48_P_o',
-    appId: '1:491560581247:android:f49da0ae2540963911274a',
+    appId: '1:491560581247:android:518973564c3d75db11274a',
     messagingSenderId: '491560581247',
     projectId: 'raydeeplink',
     storageBucket: 'raydeeplink.appspot.com',
@@ -70,6 +70,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '491560581247',
     projectId: 'raydeeplink',
     storageBucket: 'raydeeplink.appspot.com',
+    androidClientId: '491560581247-9a7vfc23mvb2utqf4pls0bvk0hreg62s.apps.googleusercontent.com',
     iosClientId: '491560581247-cnie9alb5nav3pd35gd9l8rs1l4hhid2.apps.googleusercontent.com',
     iosBundleId: 'com.example.webview',
   );

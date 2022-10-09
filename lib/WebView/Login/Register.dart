@@ -15,15 +15,10 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   final _formKey = GlobalKey<FormState>();
-
   final _username = TextEditingController();
-
   final _password = TextEditingController();
-
   final _email = TextEditingController();
-
   final loginBloc = LoginBloc();
-
   bool isSuccess = false;
   String? referralCode;
 
@@ -38,9 +33,9 @@ class _RegisterState extends State<Register> {
 
   Future<void> handleDeepLink(PendingDynamicLinkData data) async {
     final Uri deepLink = data.link;
-    var isRefer = deepLink.pathSegments.contains('refer');
+    var isRefer = deepLink.hasQuery;
     if (isRefer) {
-      var code = deepLink.queryParameters['code'];
+      var code = deepLink.queryParameters['refer'];
       if (code != null) {
         referralCode = code;
       }
