@@ -101,4 +101,37 @@ class Helper {
         textColor: Colors.white,
         fontSize: 16.0);
   }
+
+  static alertDialogWithCloseBtn(BuildContext context, title, description) {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              title,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  fontSize: 24, color: Colors.black, fontFamily: 'intel'),
+            ),
+            contentPadding: const EdgeInsets.all(4),
+            content: Container(
+              padding: const EdgeInsets.all(8),
+              child: Text(
+                description,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                    fontSize: 16, color: Colors.blue, fontFamily: 'intel'),
+              ),
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text("OK"))
+            ],
+          );
+        });
+  }
 }

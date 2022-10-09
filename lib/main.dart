@@ -6,7 +6,7 @@ import 'package:flutter_notification_channel/notification_importance.dart';
 import 'package:flutter_notification_channel/notification_visibility.dart';
 import 'package:get/get.dart';
 import 'package:webview/Routes/Routes.dart';
-import 'package:webview/WebView/Helper/Helper.dart';
+import 'package:webview/WebView/Login/Login.dart';
 import 'package:webview/WebView/WebViewUi.dart';
 import 'package:webview/firebase_options.dart';
 import 'package:flutter_notification_channel/flutter_notification_channel.dart';
@@ -14,7 +14,14 @@ import 'package:flutter_notification_channel/flutter_notification_channel.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   runApp(const MyApp());
+}
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+
+  print("Handling a background message: ${message.messageId}");
 }
 
 class MyApp extends StatefulWidget {
@@ -31,7 +38,6 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     setState(() {
       notificationSetting();
-      initFirebaseNotificationListener();
       initDynamicLinks();
       configureNotifications();
     });
@@ -42,50 +48,12 @@ class _MyAppState extends State<MyApp> {
     FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
     dynamicLinks.onLink.listen((dynamicLinkData) {
       Get.toNamed(dynamicLinkData.link.queryParameters.values.first);
-      // var user = FirebaseAuth.instance.currentUser;
-
-      // if (user == null &&
-      //     dynamicLinkData != null &&
-      //     dynamicLinkData.link.hasQuery) {
-      //   String referrerUid =
-      //       dynamicLinkData.link.queryParameters['invitedby'] ?? '';
-      //   createAnonymousAccountWithReferrerInfo(referrerUid);
-      // }
     }).onError((error) {
       print(error.message);
     });
   }
 
-  Future<void> handleDeepLink(PendingDynamicLinkData data) async {
-    final Uri deepLink = data.link;
-    var isRefer = deepLink.pathSegments.contains('refer');
-    if (isRefer) {
-      var code = deepLink.queryParameters['invitedby'];
-      if (code != null) {
-        String referrerCode = code;
-      }
-    }
-  }
-
-  // createAnonymousAccountWithReferrerInfo(String refferUId) {
-  //   FirebaseAuth.instance.signInAnonymously().whenComplete(() {
-  //     var user = FirebaseAuth.instance.currentUser;
-  //     DatabaseReference ref = FirebaseDatabase.instance.ref();
-  //     var userRecord = ref.child("users").child(user!.uid);
-  //     userRecord.child("referred_by").set(refferUId);
-  //   });
-  // }
-
   Future<void> rewardUser(String currentUserId, String referrerCode) async {}
-
-  void initFirebaseNotificationListener() {
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      Helper.showToast("Notification Received");
-    });
-    FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      //when user tap on the notification
-    });
-  }
 
   configureNotifications() {
     var result = FlutterNotificationChannel.registerNotificationChannel(
@@ -122,6 +90,6 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: WebViewUI());
+        home: Login());
   }
 }
