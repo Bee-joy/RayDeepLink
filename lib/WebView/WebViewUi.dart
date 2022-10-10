@@ -49,7 +49,7 @@ class _WebViewUIState extends State<WebViewUI> {
             height: 100,
             width: MediaQuery.of(context).size.width * .9,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Colors.black,
               borderRadius: BorderRadius.circular(15),
             ),
             child: Material(
@@ -78,7 +78,7 @@ class _WebViewUIState extends State<WebViewUI> {
                                     style: const TextStyle(
                                         overflow: TextOverflow.ellipsis,
                                         fontSize: 12.0,
-                                        color: Colors.black),
+                                        color: Colors.white),
                                   ),
                                   const SizedBox(
                                     height: 10,
@@ -89,7 +89,7 @@ class _WebViewUIState extends State<WebViewUI> {
                                     style: const TextStyle(
                                         overflow: TextOverflow.ellipsis,
                                         fontSize: 12.0,
-                                        color: Colors.black),
+                                        color: Colors.white),
                                   ),
                                 ],
                               ),

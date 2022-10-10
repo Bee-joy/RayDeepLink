@@ -6,6 +6,7 @@ import 'package:flutter_notification_channel/notification_importance.dart';
 import 'package:flutter_notification_channel/notification_visibility.dart';
 import 'package:get/get.dart';
 import 'package:webview/Routes/Routes.dart';
+import 'package:webview/WebView/Helper/Helper.dart';
 import 'package:webview/WebView/Login/Login.dart';
 import 'package:webview/WebView/WebViewUi.dart';
 import 'package:webview/firebase_options.dart';
@@ -14,14 +15,7 @@ import 'package:flutter_notification_channel/flutter_notification_channel.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   runApp(const MyApp());
-}
-
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
-
-  print("Handling a background message: ${message.messageId}");
 }
 
 class MyApp extends StatefulWidget {
@@ -37,36 +31,46 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     setState(() {
+      getN();
+      //configureNotifications();
       notificationSetting();
+      // initFirebaseNotificationListener();
       initDynamicLinks();
-      configureNotifications();
     });
   }
+
+  // void initFirebaseNotificationListener() {
+  //   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  //     Helper.showToast("notification received");
+  //     FirebaseMessaging.onMessageOpenedApp.listen((message) {
+  //       //when user tap on the notification
+  //     });
+  //   });
+  // }
 
   final FirebaseMessaging _notifications = FirebaseMessaging.instance;
   Future<void> initDynamicLinks() async {
     FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
     dynamicLinks.onLink.listen((dynamicLinkData) {
-      print("link is $dynamicLinkData");
       Get.toNamed(dynamicLinkData.link.queryParameters.values.first);
     }).onError((error) {
       print(error.message);
     });
   }
 
-  configureNotifications() {
-    var result = FlutterNotificationChannel.registerNotificationChannel(
-      description: 'Your channel description',
-      id: 'webview',
-      importance: NotificationImportance.IMPORTANCE_HIGH,
-      name: 'Your channel name',
-      visibility: NotificationVisibility.VISIBILITY_PUBLIC,
-      allowBubbles: true,
-      enableVibration: true,
-      enableSound: true,
-      showBadge: true,
-    );
-  }
+  // configureNotifications() {
+  //   var result = FlutterNotificationChannel.registerNotificationChannel(
+  //     description: 'Your channel description',
+  //     id: 'beejoy',
+  //     importance: NotificationImportance.IMPORTANCE_HIGH,
+  //     name: 'Your channel name',
+  //     visibility: NotificationVisibility.VISIBILITY_PUBLIC,
+  //     allowBubbles: true,
+  //     enableVibration: true,
+  //     enableSound: true,
+  //     showBadge: true,
+  //   );
+  // }
 
   void notificationSetting() async {
     NotificationSettings settings = await _notifications.requestPermission(
@@ -78,6 +82,10 @@ class _MyAppState extends State<MyApp> {
       provisional: false,
       sound: true,
     );
+  }
+
+  Future<void> getN() async {
+    print(await _notifications.getToken());
   }
 
   @override
